@@ -1,10 +1,10 @@
 
-=== ElementsKit Elementor addons (Header & Footer Builder, Mega Menu Builder, Layout Library) ===
-Contributors: Ataurr, wpmet, emranio, easin55474, enamulhoquemohon
+=== ElementsKit Elementor addons (Header Footer Builder, Mega Menu Builder, Free Elementor Widgets & Elementor Templates Library) ===
+Contributors: Ataurr, wpmet, emranio, aion11
 Tags: elementor addons, mega menu builder, header footer builder, elementor widgets, Accordion tab, elementor modules, page builder addons, elementor addon, elementor widget, addons
 Requires at least: 5.0
-Tested up to: 5.8
-Stable tag: 2.4.0
+Tested up to: 6.0
+Stable tag: 2.6.2
 Requires PHP: 7.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -157,7 +157,7 @@ Our Elementor Header Info addon offers lots of styling options including: Elemen
 
 21. [ **Image Comparison** ](https://wpmet.com/plugin/elementskit/image-comparision) - Display your Elementor image widget that compares two images and gives an attractive before and after slider effect. With our image comparison Elementor widget, you can compare the image by selecting vertical or horizontal with motion effects, customize label color, typography, background type, margin, padding etc for before and after image.
 [ **Check out our video screencast** ](https://www.youtube.com/watch?v=BJiDEaLvddQ&feature=youtu.be)
-Our Elementor Image Comparison addon offers lots of styling options including: Elementor  Image Comparison addon before after slider with vertical style,  Elementor before after image comparison slider with horizontal style, WordPress Before after slider with dark style, Elementor Image Comparison addon before after image slider with border, Elementor image comparison slider with hover, Elementor visual composer image comparison slider with border radius.
+Our Elementor Image Comparison addon offers lots of styling options including: Elementor  Image Comparison addon before after slider with vertical style,  Elementor before after image comparison slider with horizontal style, WordPress Before after slider with dark style, Elementor Image Comparison addon before after image slider with border, Elementor image comparison slider with hover, Elementor image comparison slider with border radius.
 
 22. [ **Call To Action** ](https://wpmet.com/plugin/elementskit/call-to-action/) - Bring an image, button and content and other features under one box with Elementor call to action widget. With this call to action Elementor page builder addons you can select image, button, title, color and many more styling options.
 [ **Check out our video screencast** ](https://www.youtube.com/watch?v=nVHM65aLrcY&feature=youtu.be)
@@ -412,6 +412,100 @@ Do you want to integrate the Facebook Messenger chat-head to any of your web pag
 Start using the Facebook Messenger module chat-head by providing the Page ID, choosing any color, logged in user greeting, and logged out user greeting. You can also show your visitors a dialogue box if you wish to. However, make sure that your domain is whitelisted on the page you’re linking to.
 
 == Changelog ==
+Version: 2.6.2 (2022-06-20)
+Fixed: Twitter feed widget token not working
+Fixed: WPML compatibility
+Fixed: Post tab control
+Fixed: Console error for image-accordion widget
+Fixed: Widgets and modules active toggle button not working
+Tweaked: Phpcs security improvement 
+Tweaked: Control and placeholder of funfact widget
+
+Version: 2.6.1 (2022-05-24)
+Added: Form signature fields for Elementor.
+Added: Form conditional fields for Elementor.
+Added: Form reset button for Elementor.
+Added: Google sheet for Elementor form.
+Fixed: TablePress js error in Elementor editor.
+Fixed: Repeater field error in Business Hour widget.
+Fixed: Id attributes were not printing in the Tab widget.
+Improved: Added more secure escaping for HTML printing.
+
+Version: 2.6.0 (2022-05-20)
+Improved: Added more secure escaping for HTML printing.
+
+Version: 2.5.10 (2022-05-18)
+Fixed: Minor CSS fix.
+Fixed: Tablepress JS console error.
+
+Version: 2.5.9 (2022-05-10)
+Fixed: HTML special character issue fix.
+
+Version: 2.5.8 (2022-05-10)
+Fixed: Missing HTML scape functions.
+
+Version: 2.5.7 (2022-04-25)
+Fixed: Advance Tab widget issue.
+Fixed: Advance Accordion widget issue.
+Fixed: Advance Toggle widget issue.
+Fixed: Advance Slider widget issue.
+
+Version: 2.5.6 (2022-04-18)
+Added: Language Files.
+Added: WPMl support for ElementsKit template specially for Header & Footer Builder.  
+Fixed: Escaping issues.
+Fixed: Theme support issue.
+Fixed: One page scroll issue. 
+Tweaked: Change some links.
+
+Version: 2.5.5 (2022-03-24)
+Added: Whatsapp widget.
+Fixed: Elementor responsive control devices compatibility issue.
+Fixed: Image accordion active issue on hover.
+Fixed: One page scroll not working for mobile with OceanWP theme.
+Improved: Added link for heading widget.
+Fixed: Elementor 3.6.1 conflicts for depreciation.
+Fixed: Menu dropdown and sticky feature issue.
+
+Version: 2.5.4 (2022-02-15)
+Improved: Image_accordion widget for wrapper link, etc.
+Fixed: Compatibility issues with Elementor Pro Latest Version.
+Fixed: Nav menu widget not responding properly when the Elementor PRO is activated.
+Fixed: Nav menu click issue.
+Fixed: Nav menu widget issue with jetpack.
+Fixed: Video widget issue.
+Fixed: Post list widget issue.
+Fixed: Page list vertical alignment does not work for icon.
+Fixed: WP submenu list isn't working if megamenu is activated.
+
+Version: 2.5.3 (2022-01-22)
+Fixed: Nav menu widget dropdown issue with onclick.
+Fixed: Nav menu link not clickable if item has dropdown.
+Fixed: Submenu list isn't working if megamenu is activated.
+Tweaked: CSS and JS improved.
+
+Version: 2.5.2 (2022-01-09)
+Added: Nav menu widget dropdown open on click.
+Added: Ajax Loading support for Advanced Tab Widget.
+Fixed: Ask for rating notice logo not showing.
+Improved: Html tags associated with table.
+Tweak: CSS and JS improved.
+
+Version: 2.5.1 (2021-12-02)
+Fix: Megamenu Markup validation issue for Nav Menu Widget.
+Tweak: CSS and JS improved.
+
+Version: 2.5.0 (2021-11-25)
+New: Links support for Testimonial Widget.
+Fix: Mobile menu visual issue (theme compatibility).
+Fix: Price Tag hides without duration text for Pricing Widget.
+Fix: Minor Spelling for Widget Builder Module.
+Fix: Overlay responsive issue in the Editor for Nav Menu Widget.
+Fix: Menu Badge arrow styling for Nav Menu Widget.
+Fix: Autoplay issue for Video Widget.
+Fix: Video widget short link embed issue.
+Tweak: Duration and Symbol Control Labels for Pricing Widget.
+
 Version: 2.4.0 (2021-11-07)
 Fix: Mobile Menu Animation is fixed on iOS 15
 Fix: 'Tab' widget SVG icon visible issues has been fixed
@@ -628,8 +722,7 @@ Version: 2.0.6
 Fix: PHP warning
 
 Version: 2.0.5
-New: New controls added in Dribbble, Behance and Pinterest Feed
-New: New controls added in Yelp and trustpilot Review
+New: New controls added in Dribbble, Behance and Pinterest Feed 
 New: New Pro widget Google Map added
 Fix: minor css issues fixed
 Fix: nav menu sub-menu indicator and hover background color issue

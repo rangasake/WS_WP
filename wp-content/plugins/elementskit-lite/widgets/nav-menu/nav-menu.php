@@ -52,12 +52,10 @@ class ElementsKit_Widget_Nav_Menu extends Widget_Base {
         $this->start_controls_section(
             'elementskit_content_tab',
             [
-                'label' => esc_html__('Menu settings', 'elementskit-lite'),
+                'label' => esc_html__('Menu Settings', 'elementskit-lite'),
                 'tab' => Controls_Manager::TAB_CONTENT,
             ]
         );
-
-
 
         $this->add_control(
             'elementskit_nav_menu',
@@ -81,15 +79,48 @@ class ElementsKit_Widget_Nav_Menu extends Widget_Base {
                     'elementskit-menu-po-justified'  => esc_html__( 'Justified', 'elementskit-lite' ),
                 ],
             ]
+        );
 
+        $this->add_control(
+            'elementskit_nav_dropdown_as',
+            [
+                'label' => esc_html__( 'Dropdown open as', 'elementskit-lite' ),
+                'type' => Controls_Manager::SELECT,
+                'default' => 'ekit-nav-dropdown-hover',
+                'options' => [
+                    'ekit-nav-dropdown-hover'  => esc_html__( 'Hover', 'elementskit-lite' ),
+                    'ekit-nav-dropdown-click' => esc_html__( 'Click', 'elementskit-lite' ),
+                ],
+            ]
+        );
 
+        $this->add_control(
+            'elementskit_one_page_enable',
+            [
+                'label' => esc_html__('Enable one page? ', 'elementskit-lite'),
+                'description'	=> esc_html__('This works in the current page.', 'elementskit-lite'),
+                'type' => Controls_Manager::SWITCHER,
+                'default' => 'no',
+                'label_on' =>esc_html__( 'Yes', 'elementskit-lite' ),
+                'label_off' =>esc_html__( 'No', 'elementskit-lite' ),
+            ]
+        );
 
-
-
-
+        $this->add_control(
+            'elementskit_responsive_breakpoint',
+            [
+                'label' => __( 'Responsive Breakpoint', 'elementskit-lite' ),
+                'type' => Controls_Manager::SELECT,
+                'default' => 'ekit_menu_responsive_tablet',
+                'options' => [
+                    'ekit_menu_responsive_tablet'  => __( 'Tablet', 'elementskit-lite' ),
+                    'ekit_menu_responsive_mobile' => __( 'Mobile', 'elementskit-lite' ),
+                ],
+            ]
         );
 
         $this->end_controls_section();
+
         $this->start_controls_section(
             'elementskit_mobile_menu',
             [
@@ -104,7 +135,7 @@ class ElementsKit_Widget_Nav_Menu extends Widget_Base {
                 'label' => esc_html__( 'Mobile Menu Logo', 'elementskit-lite' ),
                 'type' => Controls_Manager::MEDIA,
                 'default' => [
-                    'url' => Utils::get_placeholder_image_src(),
+                    'url' => '', //Utils::get_placeholder_image_src() -- removed for conflict with jetpack
                     'id'    => -1
                 ],
             ]
@@ -137,8 +168,6 @@ class ElementsKit_Widget_Nav_Menu extends Widget_Base {
             ]
         );
 
-
-
         $this->add_control(
             'elementskit_hamburger_icon',
             [
@@ -147,54 +176,19 @@ class ElementsKit_Widget_Nav_Menu extends Widget_Base {
                 'separator' => 'before',
             ]
         );
-			$this->add_control(
-				'submenu_click_area',
-				[
-					'label'         => esc_html__('Submenu Click Area', 'elementskit-lite'),
-					'type'          => Controls_Manager::SWITCHER,
-					'label_on'      => esc_html__('Icon', 'elementskit-lite'),
-					'label_off'     => esc_html__('Text', 'elementskit-lite'),
-					'return_value'  => 'icon',
-					'default'       => 'icon',
-				]
-			);
-        $this->end_controls_section();
-
-
-        $this->start_controls_section(
-            'elementskit_menu',
-            [
-                'label' => esc_html__('Menu Settings', 'elementskit-lite'),
-                'tab' => Controls_Manager::TAB_CONTENT,
-            ]
-        );
-
-
-
 
         $this->add_control(
-            'elementskit_one_page_enable',
+            'submenu_click_area',
             [
-                'label' => esc_html__('Enable one page? ', 'elementskit-lite'),
-                'description'	=> esc_html__('This works in the current page.', 'elementskit-lite'),
-                'type' => Controls_Manager::SWITCHER,
-                'default' => 'no',
-                'label_on' =>esc_html__( 'Yes', 'elementskit-lite' ),
-                'label_off' =>esc_html__( 'No', 'elementskit-lite' ),
+                'label'         => esc_html__('Submenu Click Area', 'elementskit-lite'),
+                'type'          => Controls_Manager::SWITCHER,
+                'label_on'      => esc_html__('Icon', 'elementskit-lite'),
+                'label_off'     => esc_html__('Text', 'elementskit-lite'),
+                'return_value'  => 'icon',
+                'default'       => 'icon',
             ]
         );
-        $this->add_control(
-            'elementskit_responsive_breakpoint',
-            [
-                'label' => __( 'Responsive Breakpoint', 'elementskit-lite' ),
-                'type' => Controls_Manager::SELECT,
-                'default' => 'ekit_menu_responsive_tablet',
-                'options' => [
-                    'ekit_menu_responsive_tablet'  => __( 'Tablet', 'elementskit-lite' ),
-                    'ekit_menu_responsive_mobile' => __( 'Mobile', 'elementskit-lite' ),
-                ],
-            ]
-        );
+
         $this->end_controls_section();
 
         $this->start_controls_section(
@@ -262,7 +256,7 @@ class ElementsKit_Widget_Nav_Menu extends Widget_Base {
             [
                 'label'     => esc_html__( 'Mobile Wrapper Background', 'elementskit-lite' ),
                 'type'      => Controls_Manager::COLOR,
-                'devices'   => [ 'tablet', 'mobile' ],
+                'devices'   => ['desktop', 'tablet', 'mobile'],
                 'selectors' => [
                     '{{WRAPPER}} .elementskit-menu-container'   => 'background-color: {{VALUE}};',
                 ],
@@ -282,7 +276,7 @@ class ElementsKit_Widget_Nav_Menu extends Widget_Base {
                     'left' => '0',
                     'unit' => 'px',
                 ],
-                'devices' => ['tablet'],
+                'devices' => ['desktop', 'tablet'],
                 'selectors' => [
                     '{{WRAPPER}} .elementskit-nav-identity-panel' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
@@ -295,7 +289,7 @@ class ElementsKit_Widget_Nav_Menu extends Widget_Base {
                 'label' => esc_html__( 'Width', 'elementskit-lite' ),
                 'type' => Controls_Manager::SLIDER,
                 'size_units' => [ 'px', '%' ],
-                'devices' => ['tablet', 'mobile'],
+                'devices' => ['desktop', 'tablet', 'mobile'],
                 'range' => [
                     'px' => [
                         'min' => 350,
@@ -595,7 +589,7 @@ class ElementsKit_Widget_Nav_Menu extends Widget_Base {
             [
                 'label' => esc_html__( 'Spacing', 'elementskit-lite' ),
                 'type' => Controls_Manager::DIMENSIONS,
-                'devices' => [ 'desktop', 'tablet' ],
+                'devices' => ['desktop', 'tablet'],
                 'desktop_default' => [
                     'top' => 15,
                     'right' => 15,
@@ -922,7 +916,7 @@ class ElementsKit_Widget_Nav_Menu extends Widget_Base {
                 'label' => esc_html__( 'Padding', 'elementskit-lite' ),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => [ 'px', ],
-                'devices' => [ 'tablet' ],
+                'devices' => ['desktop', 'tablet'],
                 'tablet_default' => [
                     'top' => '8',
                     'right' => '8',
@@ -949,7 +943,7 @@ class ElementsKit_Widget_Nav_Menu extends Widget_Base {
                         'step' => 1,
                     ],
                 ],
-                'devices' => [ 'tablet' ],
+                'devices' => ['desktop', 'tablet'],
                 'tablet_default' => [
                     'unit' => 'px',
                     'size' => 45,
@@ -977,7 +971,7 @@ class ElementsKit_Widget_Nav_Menu extends Widget_Base {
                         'max' => 100,
                     ],
                 ],
-                'devices' => [ 'tablet' ],
+                'devices' => ['desktop', 'tablet'],
                 'tablet_default' => [
                     'unit' => 'px',
                     'size' => 3,
@@ -1125,7 +1119,7 @@ class ElementsKit_Widget_Nav_Menu extends Widget_Base {
                 'label' => esc_html__( 'Padding', 'elementskit-lite' ),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => [ 'px', ],
-                'devices' => [ 'tablet' ],
+                'devices' => ['desktop', 'tablet'],
                 'tablet_default' => [
                     'top' => '8',
                     'right' => '8',
@@ -1145,7 +1139,7 @@ class ElementsKit_Widget_Nav_Menu extends Widget_Base {
                 'label' => esc_html__( 'Margin', 'elementskit-lite' ),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => [ 'px', ],
-                'devices' => [ 'tablet' ],
+                'devices' => ['desktop', 'tablet'],
                 'tablet_default' => [
                     'top' => '12',
                     'right' => '12',
@@ -1172,7 +1166,7 @@ class ElementsKit_Widget_Nav_Menu extends Widget_Base {
                         'step' => 1,
                     ],
                 ],
-                'devices' => [ 'tablet' ],
+                'devices' => ['desktop', 'tablet'],
                 'tablet_default' => [
                     'unit' => 'px',
                     'size' => 45,
@@ -1200,7 +1194,7 @@ class ElementsKit_Widget_Nav_Menu extends Widget_Base {
                         'max' => 100,
                     ],
                 ],
-                'devices' => [ 'tablet' ],
+                'devices' => ['desktop', 'tablet'],
                 'tablet_default' => [
                     'unit' => 'px',
                     'size' => 3,
@@ -1410,6 +1404,12 @@ class ElementsKit_Widget_Nav_Menu extends Widget_Base {
 
     protected function render( ) {
         $settings = $this->get_settings_for_display();
+
+        // Return if menu not selected
+        if(empty($settings['elementskit_nav_menu'])) {
+            return;
+        }
+
         $hamburger_icon_value = '';
         $hamburger_icon_type = '';
         if ($settings['elementskit_hamburger_icon'] != '' && $settings['elementskit_hamburger_icon']) {
@@ -1430,7 +1430,7 @@ class ElementsKit_Widget_Nav_Menu extends Widget_Base {
             $responsive_menu_breakpoint = "767";
         }
 
-        echo '<div class="ekit-wid-con '.esc_attr($settings['elementskit_responsive_breakpoint']).'" data-hamburger-icon="'.$hamburger_icon_value.'" data-hamburger-icon-type="'.$hamburger_icon_type.'" data-responsive-breakpoint="'.esc_attr($responsive_menu_breakpoint).'">';
+        echo '<div class="ekit-wid-con '.esc_attr($settings['elementskit_responsive_breakpoint']).'" data-hamburger-icon="'.esc_attr($hamburger_icon_value).'" data-hamburger-icon-type="'.esc_attr($hamburger_icon_type).'" data-responsive-breakpoint="'.esc_attr($responsive_menu_breakpoint).'">';
         $this->render_raw();
         echo '</div>';
     }
@@ -1486,11 +1486,19 @@ class ElementsKit_Widget_Nav_Menu extends Widget_Base {
 					<button class="elementskit-menu-close elementskit-menu-toggler" type="button">X</button>
 				</div>
 			';
+
+			$container_classes = [
+				'elementskit-menu-container elementskit-menu-offcanvas-elements elementskit-navbar-nav-default',
+				$settings['elementskit_style_tab_submenu_item_arrow'],
+				'ekit-nav-menu-one-page-' . $settings['elementskit_one_page_enable'],
+				!empty($settings['elementskit_nav_dropdown_as']) ? $settings['elementskit_nav_dropdown_as'] : 'ekit-nav-dropdown-hover',
+			];
+
             $args = [
                 'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>' . $markup,
                 'container'       => 'div',
                 'container_id'    => 'ekit-megamenu-' . $settings['elementskit_nav_menu'],
-                'container_class' => 'elementskit-menu-container elementskit-menu-offcanvas-elements elementskit-navbar-nav-default ' . $settings['elementskit_style_tab_submenu_item_arrow'] . ' ekit-nav-menu-one-page-' . $settings['elementskit_one_page_enable'],
+                'container_class' => join(' ', $container_classes),
                 'menu'         	  => $settings['elementskit_nav_menu'],
                 'menu_class'      => 'elementskit-navbar-nav ' . $settings['elementskit_main_menu_position'] .' submenu-click-on-'. $settings['submenu_click_area'],
                 'depth'           => 4,

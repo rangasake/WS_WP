@@ -370,7 +370,6 @@ class ElementsKit_Widget_Header_Search extends Widget_Base
 		$this->end_controls_section();
 
         $this->insert_pro_message();
-
     }
 
 
@@ -392,6 +391,7 @@ class ElementsKit_Widget_Header_Search extends Widget_Base
          */
         $language_prefix = (!function_exists('pll_current_language') ? '' : pll_current_language());
 
+        $ekit_search_link = apply_filters( 'ekit_search_link', home_url( '/'.$language_prefix ) );
         ?>
         <a href="#ekit_modal-popup-<?php echo esc_attr($this->get_id()); ?>" class="ekit_navsearch-button ekit-modal-popup">
             <?php
@@ -414,7 +414,7 @@ class ElementsKit_Widget_Header_Search extends Widget_Base
         <div class="zoom-anim-dialog mfp-hide ekit_modal-searchPanel" id="ekit_modal-popup-<?php echo esc_attr($this->get_id()); ?>">
             <div class="ekit-search-panel">
             <!-- Polylang search - thanks to Alain Melsens -->
-                <form role="search" method="get" class="ekit-search-group" action="<?php echo esc_url( home_url( '/'.$language_prefix ) ); ?>">
+                <form role="search" method="get" class="ekit-search-group" action="<?php echo esc_url( $ekit_search_link ); ?>">
                     <input type="search" class="ekit_search-field" placeholder="<?php echo esc_attr( $settings['ekit_search_placeholder_text'] ); ?>" value="<?php echo esc_attr(get_search_query()); ?>" name="s" />
                     <button type="submit" class="ekit_search-button">
                         <?php

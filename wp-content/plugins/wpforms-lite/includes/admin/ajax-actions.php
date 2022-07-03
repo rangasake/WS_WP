@@ -39,7 +39,7 @@ function wpforms_save_form() {
 			// derive the array path keys via regex and set the value in $_POST.
 			preg_match( '#([^\[]*)(\[(.+)\])?#', $post_input_data->name, $matches );
 
-			$array_bits = array( $matches[1] );
+			$array_bits = [ $matches[1] ];
 
 			if ( isset( $matches[3] ) ) {
 				$array_bits = array_merge( $array_bits, explode( '][', $matches[3] ) );
@@ -52,9 +52,9 @@ function wpforms_save_form() {
 				if ( $i === count( $array_bits ) - 1 ) {
 					$new_post_data[ $array_bits[ $i ] ] = wp_slash( $post_input_data->value );
 				} else {
-					$new_post_data = array(
+					$new_post_data = [
 						$array_bits[ $i ] => $new_post_data,
-					);
+					];
 				}
 			}
 
@@ -62,26 +62,62 @@ function wpforms_save_form() {
 		}
 	}
 
-	$form_id = wpforms()->form->update( $data['id'], $data );
+	// Get form tags.
+	$form_tags = isset( $data['settings']['form_tags_json'] ) ? json_decode( wp_unslash( $data['settings']['form_tags_json'] ), true ) : [];
 
+	// Clear not needed data.
+	unset( $data['settings']['form_tags_json'] );
+
+	// Store tags labels in the form settings.
+	$data['settings']['form_tags'] = wp_list_pluck( $form_tags, 'label' );
+
+	// Update form data.
+	$form_id = wpforms()->get( 'form' )->update( $data['id'], $data );
+
+	/**
+	 * Fires after updating form data.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @param int   $form_id Form ID.
+	 * @param array $data    Form data.
+	 */
 	do_action( 'wpforms_builder_save_form', $form_id, $data );
 
 	if ( ! $form_id ) {
 		wp_send_json_error( esc_html__( 'Something went wrong while saving the form.', 'wpforms-lite' ) );
 	}
 
-	wp_send_json_success(
-		apply_filters(
-			'wpforms_builder_save_form_response_data',
-			array(
-				'form_name' => esc_html( $data['settings']['form_title'] ),
-				'form_desc' => $data['settings']['form_desc'],
-				'redirect'  => admin_url( 'admin.php?page=wpforms-overview' ),
-			),
-			$form_id,
-			$data
-		)
+	// Update form tags.
+	wp_set_post_terms(
+		$form_id,
+		wpforms()->get( 'forms_tags_ajax' )->get_processed_tags( $form_tags ),
+		WPForms_Form_Handler::TAGS_TAXONOMY
 	);
+
+	$response_data = [
+		'form_name' => esc_html( $data['settings']['form_title'] ),
+		'form_desc' => $data['settings']['form_desc'],
+		'redirect'  => admin_url( 'admin.php?page=wpforms-overview' ),
+	];
+
+	/**
+	 * Allows filtering ajax response data after form was saved.
+	 *
+	 * @since 1.5.1
+	 *
+	 * @param array $response_data The data to be sent in the response.
+	 * @param int   $form_id       Form ID.
+	 * @param array $data          Form data.
+	 */
+	$response_data = apply_filters(
+		'wpforms_builder_save_form_response_data',
+		$response_data,
+		$form_id,
+		$data
+	);
+
+	wp_send_json_success( $response_data );
 }
 
 add_action( 'wp_ajax_wpforms_save_form', 'wpforms_save_form' );
@@ -114,12 +150,19 @@ function wpforms_new_form() {
 	);
 
 	if ( $title_exists !== null ) {
+
+		// Skip creating a revision for this action.
+		remove_action( 'post_updated', 'wp_save_post_revision' );
+
 		wp_update_post(
 			[
 				'ID'         => $form_id,
 				'post_title' => $form_title . ' (ID #' . $form_id . ')',
 			]
 		);
+
+		// Restore the initial revisions state.
+		add_action( 'post_updated', 'wp_save_post_revision', 10, 1 );
 	}
 
 	if ( ! $form_id ) {
@@ -532,7 +575,20 @@ function wpforms_install_addon() {
 
 	$error = $type === 'plugin'
 		? esc_html__( 'Could not install the plugin. Please download and install it manually.', 'wpforms-lite' )
-		: esc_html__( 'Could not install the addon. Please download it from wpforms.com and install it manually.', 'wpforms-lite' );
+		: sprintf(
+			wp_kses( /* translators: %1$s - An addon download URL, %2$s - Link to manual installation guide. */
+				__( 'Could not install the addon. Please <a href="%1$s" target="_blank" rel="noopener noreferrer">download it from wpforms.com</a> and <a href="%2$s" target="_blank" rel="noopener noreferrer">install it manually</a>.', 'wpforms-lite' ),
+				[
+					'a' => [
+						'href'   => true,
+						'target' => true,
+						'rel'    => true,
+					],
+				]
+			),
+			'https://wpforms.com/account/licenses/',
+			'https://wpforms.com/docs/how-to-manually-install-addons-in-wpforms/'
+		);
 
 	$plugin_url = ! empty( $_POST['plugin'] ) ? esc_url_raw( wp_unslash( $_POST['plugin'] ) ) : '';
 

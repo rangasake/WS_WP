@@ -163,7 +163,7 @@ class ElementsKit_Widget_Post_Tab extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em' ],
 				'selectors' => [
-					'{{WRAPPER}} .tab__list' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .post--tab .tabHeader .tab__list' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -183,7 +183,7 @@ class ElementsKit_Widget_Post_Tab extends Widget_Base {
 			[
 				'name' => 'ekit_post_tab__item_content_typography',
 				'label' => esc_html__( 'Typography', 'elementskit-lite' ),
-				'selector' => '{{WRAPPER}} .tab__list .tab__list__item',
+				'selector' => '{{WRAPPER}} .post--tab .tabHeader .tab__list .tab__list__item',
 			]
         );
 
@@ -194,7 +194,7 @@ class ElementsKit_Widget_Post_Tab extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em' ],
 				'selectors' => [
-					'{{WRAPPER}} .tab__list .tab__list__item' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .post--tab .tabHeader .tab__list .tab__list__item' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
         );
@@ -206,7 +206,7 @@ class ElementsKit_Widget_Post_Tab extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em' ],
 				'selectors' => [
-					'{{WRAPPER}} .tab__list .tab__list__item' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .post--tab .tabHeader .tab__list .tab__list__item' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -227,7 +227,7 @@ class ElementsKit_Widget_Post_Tab extends Widget_Base {
 				'label' => esc_html__( 'Color', 'elementskit-lite' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .tab__list .tab__list__item' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .post--tab .tabHeader .tab__list .tab__list__item' => 'color: {{VALUE}}',
 				],
 			]
         );
@@ -252,7 +252,7 @@ class ElementsKit_Widget_Post_Tab extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em' ],
 				'selectors' => [
-					'{{WRAPPER}} .tab__list .tab__list__item' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .post--tab .tabHeader .tab__list .tab__list__item' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -271,7 +271,7 @@ class ElementsKit_Widget_Post_Tab extends Widget_Base {
 			[
 				'name' => 'ekit_post_tab_item_normal_border',
 				'label' => esc_html__( 'Border', 'elementskit-lite' ),
-				'selector' => '{{WRAPPER}} .tab__list .tab__list__item',
+				'selector' => '{{WRAPPER}} .post--tab .tabHeader .tab__list .tab__list__item',
 			]
 		);
 
@@ -290,7 +290,7 @@ class ElementsKit_Widget_Post_Tab extends Widget_Base {
 				'label' => esc_html__( 'Color', 'elementskit-lite' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .tab__list .tab__list__item.active' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .post--tab .tabHeader .tab__list .tab__list__item.active' => 'color: {{VALUE}}',
 				],
 			]
         );
@@ -315,7 +315,7 @@ class ElementsKit_Widget_Post_Tab extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em' ],
 				'selectors' => [
-					'{{WRAPPER}} .tab__list .tab__list__item.active' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .post--tab .tabHeader .tab__list .tab__list__item.active' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -334,7 +334,7 @@ class ElementsKit_Widget_Post_Tab extends Widget_Base {
 			[
 				'name' => 'ekit_post_tab_item_hover_border',
 				'label' => esc_html__( 'Border', 'elementskit-lite' ),
-				'selector' => '{{WRAPPER}} .tab__list .tab__list__item.active',
+				'selector' => '{{WRAPPER}} .post--tab .tabHeader .tab__list .tab__list__item.active',
 			]
 		);
 
@@ -501,12 +501,12 @@ class ElementsKit_Widget_Post_Tab extends Widget_Base {
                                 $xs_query->the_post();
                                 ?>
                                 <?php if(has_post_thumbnail()): ?>
-                                    <div <?php echo $this->get_render_attribute_string('ekit-single-item'); ?>>
+                                    <div <?php echo $this->get_render_attribute_string('ekit-single-item'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Already escaped by elementor ?>>
                                         <div class="tab__post__single--inner">
-                                            <a href="<?php echo get_the_permalink(); ?>" class="tab__post--header">
+                                            <a href="<?php echo esc_url(get_the_permalink()); ?>" class="tab__post--header">
                                                 <?php the_post_thumbnail(); ?>
                                             </a>
-                                            <h3 class="tab__post--title"><a href="<?php echo get_the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                                            <h3 class="tab__post--title"><a href="<?php echo esc_url(get_the_permalink()); ?>"><?php the_title(); ?></a></h3>
                                         </div>
                                     </div>
                                 <?php endif; ?>

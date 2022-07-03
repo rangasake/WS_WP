@@ -63,7 +63,7 @@ class Data_Table extends Widget_Base {
         return 'https://essential-addons.com/elementor/docs/data-table/';
     }
 
-    protected function _register_controls()
+    protected function register_controls()
     {
 
         /**
@@ -495,7 +495,7 @@ class Data_Table extends Widget_Base {
 						],
 					],
 					'default' => '1',
-					'description' => '<span class="pro-feature"> Get the  <a href="https://wpdeveloper.net/upgrade/ea-pro" target="_blank">Pro version</a> for more stunning elements and customization options.</span>'
+					'description' => '<span class="pro-feature"> Get the  <a href="https://wpdeveloper.com/upgrade/ea-pro" target="_blank">Pro version</a> for more stunning elements and customization options.</span>'
 				]
 			);
 
@@ -1227,6 +1227,12 @@ class Data_Table extends Widget_Base {
 
 	}
 
+	public function get_style_depends() {
+		return [
+			'font-awesome-5-all',
+			'font-awesome-4-shim',
+		];
+	}
 
 	protected function render( ) {
 

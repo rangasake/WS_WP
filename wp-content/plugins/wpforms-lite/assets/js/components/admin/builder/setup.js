@@ -174,7 +174,7 @@ WPForms.Admin.Builder.Setup = WPForms.Admin.Builder.Setup || ( function( documen
 		},
 
 		/**
-		 * Force focus on the form title field when switched to the the Setup panel.
+		 * Force focus on the form title field when switched to the Setup panel.
 		 *
 		 * @since 1.6.8
 		 *
@@ -415,6 +415,9 @@ WPForms.Admin.Builder.Setup = WPForms.Admin.Builder.Setup || ( function( documen
 				.done( function( res ) {
 
 					if ( res.success ) {
+
+						// We have already warned the user that unsaved changes will be ignored.
+						WPFormsBuilder.setCloseConfirmation( false );
 						window.location.href = res.data.redirect;
 					} else {
 						wpf.debug( res );

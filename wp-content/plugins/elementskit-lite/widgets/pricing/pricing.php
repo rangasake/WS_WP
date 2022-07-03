@@ -1394,7 +1394,7 @@ class ElementsKit_Widget_Pricing extends Widget_Base {
 		$this->add_control(
 			'ekit_pricing_heading_period_style',
 			[
-				'label' => esc_html__( 'Period Options', 'elementskit-lite' ),
+				'label' => esc_html__( 'Duration', 'elementskit-lite' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -1402,7 +1402,7 @@ class ElementsKit_Widget_Pricing extends Widget_Base {
 		$this->add_control(
 			'ekit_pricing_period_text_color',
 			[
-				'label' =>esc_html__( 'Period Color', 'elementskit-lite' ),
+				'label' =>esc_html__( 'Text Color', 'elementskit-lite' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
@@ -1413,7 +1413,7 @@ class ElementsKit_Widget_Pricing extends Widget_Base {
 		$this->add_control(
 			'ekit_pricing_period_text_color_hover',
 			[
-				'label' =>esc_html__( 'Period Hover Color', 'elementskit-lite' ),
+				'label' =>esc_html__( 'Text Hover Color', 'elementskit-lite' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
@@ -1426,7 +1426,7 @@ class ElementsKit_Widget_Pricing extends Widget_Base {
             Group_Control_Typography::get_type(),
             [
                 'name' => 'ekit_pricing_period_typography_group',
-                'label' =>esc_html__( 'Period Typography', 'elementskit-lite' ),
+                'label' =>esc_html__( 'Typography', 'elementskit-lite' ),
                 'selector' => '{{WRAPPER}} .elementskit-single-pricing .elementskit-pricing-price-wraper.has-tag .elementskit-pricing-price sub.period',
             ]
         );
@@ -1465,7 +1465,7 @@ class ElementsKit_Widget_Pricing extends Widget_Base {
 		$this->add_control(
 			'ekit_pricing_heading_currency_style',
 			[
-				'label' => esc_html__( 'Currency Symbol Options', 'elementskit-lite' ),
+				'label' => esc_html__( 'Currency Symbol', 'elementskit-lite' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -1475,7 +1475,7 @@ class ElementsKit_Widget_Pricing extends Widget_Base {
             Group_Control_Typography::get_type(),
             [
                 'name' => 'ekit_pricing_currency_size',
-                'label' =>esc_html__( 'Period Typography', 'elementskit-lite' ),
+                'label' =>esc_html__( 'Typography', 'elementskit-lite' ),
                 'selector' => '{{WRAPPER}} .elementskit-single-pricing .elementskit-pricing-price-wraper.has-tag .elementskit-pricing-price sup.currency',
             ]
         );
@@ -2484,7 +2484,7 @@ class ElementsKit_Widget_Pricing extends Widget_Base {
         <div class="elementskit-single-pricing <?php echo esc_attr($settings['ekit_pricing_order_enable'] == 'yes' ? 'd-flex flex-column' : ''); ?>" >
             <div class="elementskit-pricing-header <?php echo esc_attr($header_order ? 'order-'. $header_order : ''); ?>">
 				<?php if($settings['ekit_pricing_icon_type'] == 'image') : ?>
-                    <?php echo \ElementsKit_Lite\Utils::render($image); ?>
+                    <?php echo wp_kses($image, \ElementsKit_Lite\Utils::get_kses_array());?>
                 <?php endif; ?>
 				<?php if($settings['ekit_pricing_icon_type'] == 'icon') : ?>					
 					<?php
@@ -2508,15 +2508,15 @@ class ElementsKit_Widget_Pricing extends Widget_Base {
 				<?php endif; ?>
 
 				<?php if($table_title != ''): ?>
-                	<<?php echo \ElementsKit_Lite\Utils::render($ekit_pricing_title_size_validate); ?>
+                	<<?php echo wp_kses($ekit_pricing_title_size_validate, \ElementsKit_Lite\Utils::get_kses_array());?>
 					class=" elementskit-pricing-title"><?php echo esc_html($table_title); ?>
-					</<?php echo \ElementsKit_Lite\Utils::render($ekit_pricing_title_size_validate); ?>>
+					</<?php echo wp_kses($ekit_pricing_title_size_validate, \ElementsKit_Lite\Utils::get_kses_array()); ?>>
 				<?php endif; ?>
 				<?php if($table_subtitle != ''): ?>
                 	<p class=" elementskit-pricing-subtitle"><?php echo esc_html($table_subtitle); ?></p>
 				<?php endif; ?>
             </div>
-			<?php if ($currency_icon != '' && $table_price !== '' && $table_duration !== '') { ?>
+			<?php if ($currency_icon != '' && $table_price !== '') { ?>
             <div class=" elementskit-pricing-price-wraper has-tag <?php echo esc_attr($price_order ? 'order-'. $price_order : ''); ?>">
                 <div class="elementskit-pricing-tag"></div>
                 <span class="elementskit-pricing-price">
@@ -2527,14 +2527,17 @@ class ElementsKit_Widget_Pricing extends Widget_Base {
 					<?php if($currency_position == 'after'): ?>
 						<sup class="currency"><?php echo esc_html($currency_icon); ?></sup>
 					<?php endif; ?>
-					<sub class="period"> <?php echo esc_html($table_duration); ?></sub>
+
+					<?php if ( $table_duration !== '' ): ?>
+					<sub class="period"><?php echo esc_html($table_duration); ?></sub>
+					<?php endif; ?>
 				</span>
             </div>
 			<?php } ?>
             <div class="elementskit-pricing-content <?php echo esc_attr($features_order ? 'order-'. $features_order : ''); ?>">
 
                 <?php if($content_style == 'paragraph'){ ?>
-                    <p> <?php echo \ElementsKit_Lite\Utils::kses($table_content); ?></p>
+                    <p> <?php echo wp_kses($table_content, \ElementsKit_Lite\Utils::get_kses_array()); ?></p>
                 <?php } ?>
                 <?php if($content_style == 'list'){ ?>
                     <ul class="elementskit-pricing-lists">
@@ -2557,7 +2560,7 @@ class ElementsKit_Widget_Pricing extends Widget_Base {
                 <?php } ?>
             </div>
             <div class="elementskit-pricing-btn-wraper <?php echo esc_attr($button_order ? 'order-'. $button_order : ''); ?>">
-				<a <?php echo $this->get_render_attribute_string( 'button' ); ?> class="elementskit-pricing-btn <?php echo esc_attr( $btn_class ); ?> ekit-pricing-btn-icon-pos-<?php echo esc_attr($icon_align); ?>" <?php if($settings['ekit_pricing_button_id'] != '') { ?> id="<?php echo esc_attr( $btn_id ); ?>" <?php } ?>>
+				<a <?php echo $this->get_render_attribute_string( 'button' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Already escaped by elementor ?> class="elementskit-pricing-btn <?php echo esc_attr( $btn_class ); ?> ekit-pricing-btn-icon-pos-<?php echo esc_attr($icon_align); ?>" <?php if($settings['ekit_pricing_button_id'] != '') { ?> id="<?php echo esc_attr( $btn_id ); ?>" <?php } ?>>
 					<?php
 					if ( $settings['ekit_pricing_btn_icons'] != '' && $icon_align == 'left' ):
 						// new icon

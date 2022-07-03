@@ -24,6 +24,10 @@ class Enqueue_Scripts{
 
         // Enqueue Scripts
         wp_enqueue_script( 'elementskit-elementor', \ElementsKit_Lite::widget_url() . 'init/assets/js/elementor.js', ['jquery', 'elementor-frontend', 'animate-circle'], \ElementsKit_Lite::version(), true );
+        wp_localize_script( 'elementskit-elementor', 'ekit_config', [
+            'ajaxurl'   => admin_url( 'admin-ajax.php' ),
+            'nonce'     => wp_create_nonce( 'ekit_pro' ),
+        ] );
 
         // added swiper js - elementor remove it when "Improved Asset Loading" is active
         if(defined('ELEMENTOR_ASSETS_URL')) {
@@ -41,7 +45,6 @@ class Enqueue_Scripts{
             wp_enqueue_style( 'fluent-form-styles' );
             wp_enqueue_style( 'fluentform-public-default' );
         }
-       
     }
 
     public function elementor_css() {
@@ -65,7 +68,6 @@ class Enqueue_Scripts{
         $gmap_api_key = !empty($user_data['google_map']) ? $user_data['google_map']['api_key'] : '';
         wp_register_script( 'ekit-google-map-api', 'https://maps.googleapis.com/maps/api/js?key=' . $gmap_api_key . '', array('jquery'), false, true );
         wp_register_script( 'ekit-google-gmaps', \ElementsKit_Lite::widget_url() . 'init/assets/js/gmaps.min.js', array('jquery'), false, true );
-        
     }
     public function frontend_css() {
         if(!is_admin()){
